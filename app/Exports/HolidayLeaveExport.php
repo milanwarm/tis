@@ -22,7 +22,7 @@ class HolidayLeaveExport implements FromCollection,WithHeadings,ShouldAutoSize
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Support\Collection
      */
     public function collection() {
        return HolidayLeave::join('student', 'student.id', '=', 'holiday_leave.student_id')
