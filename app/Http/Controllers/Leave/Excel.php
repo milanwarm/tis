@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Leave;
 
 
 use App\Exports\HolidayLeaveExport;
+use App\Http\Model\Common\User;
 use App\Util\File;
 use App\Util\Logger;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +23,7 @@ class Excel {
      * 导出节假日信息至excel
      * @return string
      * @throws ParamValidateFailedException
+     * @throws \src\Exceptions\UnAuthorizedException
      */
     public function exportHolidayLeave(){
         $validator = Validator::make($params = \Request::all(),[
@@ -31,7 +33,8 @@ class Excel {
             throw new ParamValidateFailedException($validator);
         }
         $id = $params['id'];
-        $export = new HolidayLeaveExport($id);
+        $userId = User::getUser(true);
+        $export = new HolidayLeaveExport($id,$userId);
         $path = '/tis/' . date('Y') . '/' . date('md') .'/export/节假日登记情况.xlsx';
         try{
             $export->store($path,'upyun');
