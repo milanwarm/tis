@@ -32,12 +32,14 @@ class Excel {
         }
         $id = $params['id'];
         $export = new HolidayLeaveExport($id);
+        $path = "export_{$id}.xlsx";
         try{
-            $path = ComConf::HOST . 'storage/' . $export->store('节假日信息.xlsx','public');
+            $export->store($path,'public');
         }catch (\Exception $e){
             Logger::fatal('leave|save_holiday_excel_failed|id:' . $id);
         }
-        return ApiResponse::responseSuccess($path);
+        $path = ComConf::HOST . '/storage/' . $path;
+        return ApiResponse::responseSuccess(['path' => $path]);
     }
 
 }
