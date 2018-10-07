@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Leave;
 
 
 use App\Exports\HolidayLeaveExport;
-use App\Http\Config\ComConf;
+use App\Util\File;
 use App\Util\Logger;
 use Illuminate\Support\Facades\Validator;
 use src\ApiHelper\ApiResponse;
@@ -32,13 +32,13 @@ class Excel {
         }
         $id = $params['id'];
         $export = new HolidayLeaveExport($id);
-        $path = "export_{$id}.xlsx";
+        $path = '/tis/' . date('Y') . '/' . date('md') .'/export/节假日登记情况.xlsx';
         try{
-            $export->store($path,'public');
+            $export->store($path,'upyun');
         }catch (\Exception $e){
-            Logger::fatal('leave|save_holiday_excel_failed|id:' . $id);
+            Logger::fatal('leave|save_holiday_excel_failed|id:' . $id . '|msg:' . json_encode($e->getMessage()));
         }
-        $path = ComConf::HOST . '/storage/' . $path;
+        $path = File::UPYUN_HOST . $path;
         return ApiResponse::responseSuccess(['path' => $path]);
     }
 
