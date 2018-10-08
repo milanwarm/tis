@@ -34,7 +34,7 @@ class Excel {
         }
         $id = $params['id'];
         $userId = User::getUser(true);
-        $path = '/tis/' . date('Y') . '/' . date('md') .'/export/节假日登记情况.xlsx';
+        $path = 'tis/' . date('Y') . '/' . date('md') .'/export/节假日登记情况.xlsx';
         try{
             \Maatwebsite\Excel\Facades\Excel::store(new HolidayLeaveExport($id,$userId),$path,'upyun');
         }catch (\Exception $e){

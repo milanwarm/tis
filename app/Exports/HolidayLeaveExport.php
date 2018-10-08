@@ -5,9 +5,11 @@ namespace App\Exports;
 use App\Http\Model\Leave\HolidayLeave;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class HolidayLeaveExport implements FromCollection,WithHeadings,ShouldAutoSize
+class HolidayLeaveExport implements FromCollection,WithHeadings,ShouldAutoSize,WithColumnFormatting
 {
     private $holidayLeaveModelId;
     private $userId;
@@ -35,10 +37,17 @@ class HolidayLeaveExport implements FromCollection,WithHeadings,ShouldAutoSize
     public function headings(): array {
         return [
             '学号',
-            '姓名',
+            '姓名     ',
             '班级',
-            '目的地',
+            '目的地      ',
             '登记时间'
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function columnFormats(): array {
+
     }
 }
