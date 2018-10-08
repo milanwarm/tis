@@ -3,16 +3,12 @@
 namespace App\Exports;
 
 use App\Http\Model\Leave\HolidayLeave;
-use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class HolidayLeaveExport implements FromCollection,WithHeadings,ShouldAutoSize
 {
-
-    use Exportable;
-
     private $holidayLeaveModelId;
     private $userId;
 
