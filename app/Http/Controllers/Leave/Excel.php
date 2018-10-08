@@ -34,10 +34,9 @@ class Excel {
         }
         $id = $params['id'];
         $userId = User::getUser(true);
-        $export = new HolidayLeaveExport($id,$userId);
         $path = '/tis/' . date('Y') . '/' . date('md') .'/export/节假日登记情况.xlsx';
         try{
-            $export->store($path,'upyun');
+            \Maatwebsite\Excel\Facades\Excel::store(new HolidayLeaveExport($id,$userId),$path,'upyun');
         }catch (\Exception $e){
             Logger::fatal('leave|save_holiday_excel_failed|id:' . $id . '|msg:' . json_encode($e->getMessage()));
         }
